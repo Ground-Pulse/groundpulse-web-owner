@@ -1,73 +1,76 @@
 
-
- `groundpulse-web-owner`
+### 3. `groundpulse-web-owner` 
 
 ```markdown
-# groundpulse-web-owner
+# GroundPulse Owner & Inspector Web Application (`groundpulse-web-owner`)
 
-Customer-facing web application for Property Owners and Field Inspectors[cite: 1].
+Client-facing web application containing the **Owner Dashboard** and the **Inspector Field Interface** for GroundPulse.
 
 ---
 
-## 🎯 Purpose of This Repo
-This Next.js application hosts the interfaces for remote Property Owners to register assets and approve repairs, as well as the specialized field checklists used by Inspectors on site[cite: 1].
+## 📌 Work of This Repo
+This frontend application serves the property condition monitoring loop:
+- **Owner Dashboard (`/dashboard`, `/property/[id]`):** Portfolio management cards, animated property health score rings, timeline of past inspections, issue inspection galleries, and the approve/decline repair workflow.
+- **Inspector Field Checklist (`/inspections`, `/inspection/[id]/checklist`):** Mobile-optimized on-site checklist categorized by room/area, optimistic pass/fail/attention toggles, photo/video capture uploads, draft saving, and issue flagging sheets.
+- **Real-Time Updates:** Live status tracker for repairs and notification updates pushed directly via Socket.IO without manual browser refreshes.
 
 ## ❓ Why We Created This Repo
-We isolated the owner and inspector surfaces into this repo because they form the customer-facing core loop of GroundPulse[cite: 1]:
-- **Owner Experience:** Remote visibility for NRI and portfolio owners via multi-property dashboards, health scores, and an approval gate for flagged issues[cite: 1].
-- **Inspector Experience:** Mobile-optimized, room-by-room digital checklists that allow saving drafts locally and uploading photos/videos per checklist item[cite: 1].
-- **Isolation:** Keeps end-user client code and customer design tokens decoupled from back-office admin and contractor interfaces[cite: 1].
+The Owner and Inspector workflows are directly interdependent: the owner books an inspection, the inspector executes the field checklist, and the owner immediately reviews the flagged items and reports. Grouping them into this repository keeps client-facing customer UX isolated from internal admin and contractor management tooling.
 
-## 📂 File Structure
+## 🛠 Tech Stack
+- **Framework:** Next.js 14 (App Router) + React 18
+- **Language:** TypeScript (Strict Mode)
+- **Styling:** Tailwind CSS + shadcn/ui (Radix UI primitives)
+- **State Management:** TanStack Query v5 (server data) + Zustand (active checklist draft & preferences)
+- **Forms & Validation:** React Hook Form + Zod
+- **Animations:** Framer Motion
+- **Sockets:** Socket.IO Client
+
+## 📁 File Structure
 ```text
 groundpulse-web-owner/
 ├── app/
 │   ├── (owner)/
-│   │   ├── dashboard/page.tsx         # Multi-property cards & health rings
-│   │   ├── property/[id]/page.tsx     # Inspection timeline & issue list
-│   │   └── issue/[id]/page.tsx        # Media evidence & Approve/Decline actions
+│   │   ├── dashboard/page.tsx
+│   │   ├── property/[id]/page.tsx
+│   │   └── issue/[id]/page.tsx
 │   ├── (inspector)/
-│   │   ├── inspections/page.tsx       # Daily assigned jobs schedule
-│   │   └── inspection/[id]/checklist/page.tsx # Room-by-room inspection form
-│   ├── (modals)/
-│   │   ├── add-property.tsx           # Property onboarding dialog
-│   │   └── schedule-inspection.tsx    # Date & recurrence booking modal
-│   ├── layout.tsx                     # Global layout & context providers
-│   └── middleware.ts                  # Route guard matching user roles
+│   │   ├── inspections/page.tsx
+│   │   └── inspection/[id]/checklist/page.tsx
+│   ├── layout.tsx
+│   └── middleware.ts
 ├── components/
-│   ├── property/
-│   │   ├── PropertyCard.tsx
-│   │   └── HealthScoreRing.tsx        # Animated SVG health ring
+│   ├── ui/
 │   ├── checklist/
-│   │   ├── ChecklistItemRow.tsx       # Pass/Fail/Attention segmented control
-│   │   └── FlagIssueSheet.tsx         # Issue-flagging bottom sheet
-│   └── ui/                            # Shared Radix/shadcn UI primitives
+│   │   ├── ChecklistItemRow.tsx
+│   │   └── FlagIssueSheet.tsx
+│   └── property/
+│       ├── HealthScoreRing.tsx
+│       └── PropertyCard.tsx
+├── hooks/
+│   ├── useInspections.ts
+│   ├── useIssues.ts
+│   └── useProperties.ts
 ├── stores/
-│   ├── activeChecklistStore.ts        # Zustand draft store with optimistic updates
-│   └── realtimeStore.ts               # Socket.IO client event store
+│   └── activeChecklistStore.ts
 ├── lib/
-│   ├── apiClient.ts                   # Fetch wrapper targeting groundpulse-api
-│   └── socket.ts                      # Authenticated WebSocket client singleton
+│   ├── apiClient.ts
+│   └── socket.ts
 ├── package.json
-├── tailwind.config.ts
-├── tsconfig.json
 └── README.md
 💻 Commands
 Bash
-# 1. Install dependencies
+# Install dependencies
 npm install
 
-# 2. Configure environment variables
-cp .env.example .env.local
-
-# 3. Start development server
+# Start Next.js development server
 npm run dev
 
-# 4. Run tests
-npm test
-
-# 5. Build for production
+# Run build for production
 npm run build
+
+# Run component and unit tests
+npm test
 🔑 Required Environment Variables
 Code snippet
 NEXT_PUBLIC_API_URL="http://localhost:3001"
