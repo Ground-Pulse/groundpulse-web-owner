@@ -10,12 +10,19 @@ Client-facing web application containing the **Owner Dashboard** and the **Inspe
 
 ## 📌 Work of This Repo
 This frontend application serves the property condition monitoring loop:
-- **Owner Dashboard (`/dashboard`, `/property/[id]`):** Portfolio management cards, animated property health score rings, timeline of past inspections, issue inspection galleries, and the approve/decline repair workflow.
-- **Inspector Field Checklist (`/inspections`, `/inspection/[id]/checklist`):** Mobile-optimized on-site checklist categorized by room/area, optimistic pass/fail/attention toggles, photo/video capture uploads, draft saving, and issue flagging sheets.
-- **Real-Time Updates:** Live status tracker for repairs and notification updates pushed directly via Socket.IO without manual browser refreshes.
+- **Owner Dashboard (`/dashboard`, `/property/[id]`):** Portfolio management cards, 
+animated property health score rings, timeline of past inspections, issue inspection galleries, 
+and the approve/decline repair workflow.
+- **Inspector Field Checklist (`/inspections`, `/inspection/[id]/checklist`):** Mobile-optimized 
+on-site checklist categorized by room/area, optimistic pass/fail/attention toggles, 
+photo/video capture uploads, draft saving, and issue flagging sheets.
+- **Real-Time Updates:** Live status tracker for repairs and notification updates pushed directly 
+via Socket.IO without manual browser refreshes.
 
 ## ❓ Why We Created This Repo
-The Owner and Inspector workflows are directly interdependent: the owner books an inspection, the inspector executes the field checklist, and the owner immediately reviews the flagged items and reports. Grouping them into this repository keeps client-facing customer UX isolated from internal admin and contractor management tooling.
+The Owner and Inspector workflows are directly interdependent: the owner books an inspection, 
+the inspector executes the field checklist, and the owner immediately reviews the 
+flagged items and reports. Grouping them into this repository keeps client-facing customer UX isolated from internal admin and contractor management tooling.
 
 ## 🛠 Tech Stack
 - **Framework:** Next.js 14 (App Router) + React 18
